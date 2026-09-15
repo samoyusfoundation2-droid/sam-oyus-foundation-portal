@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sam Oyus Foundation | Partnership Portal</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header><nav class="nav wrap">
+<a class="brand" href="#home"><img src="assets/sof-logo.png" alt=""><span>Sam Oyus Foundation</span></a>
+<div class="links"><a href="#projects">Interventions</a><a href="#opportunities">Funding Opportunities</a><a href="#partners">For Sponsors</a><a href="#dashboard" id="dashLink" hidden>Dashboard</a><a href="#admin" id="adminLink" hidden>SOF Admin</a><button id="authBtn" class="btn small">Sponsor Login</button></div>
+<button id="menu" class="menu">☰</button></nav></header>
+
+<main>
+<section id="home" class="hero"><div class="wrap hero-grid">
+<div><p class="kicker">PARTNERSHIP & RESOURCE MOBILISATION PORTAL</p><h1>Turn resources into measurable community impact.</h1>
+<p class="lead">A digital gateway connecting Sam Oyus Foundation with international donors, foundations, CSR teams, NGOs, development agencies, universities and technical partners.</p>
+<div class="actions"><a class="btn" href="#projects">Explore Interventions</a><a class="btn outline" href="#partners">Partner With SOF</a></div>
+<div class="mini"><span>🇳🇬 Nigeria-based</span><span>•</span><span>Impact-led</span><span>•</span><span>Partnership-ready</span></div></div>
+<div class="hero-panel"><b>PARTNERSHIP PIPELINE</b><div class="pipeline"><span>Discover</span><i>→</i><span>Apply</span><i>→</i><span>Review</span><i>→</i><span>Deliver</span><i>→</i><span>Report</span></div><p>One portal for projects, proposals, applications and opportunity alerts.</p></div>
+</div></section>
+
+<section class="stats"><div class="wrap statsgrid"><div><strong id="projectCount">—</strong><span>Intervention concepts</span></div><div><strong>6</strong><span>Core programme areas</span></div><div><strong>24/7</strong><span>Partnership access</span></div><div><strong>1</strong><span>Connected partnership desk</span></div></div></section>
+
+<section id="projects" class="section"><div class="wrap"><div class="head"><div><p class="kicker">PROJECT & INTERVENTION DATABASE</p><h2>Find a project to support.</h2></div><p>Browse investable concepts and download a proposal before submitting a partnership interest.</p></div>
+<div class="filters"><input id="search" placeholder="Search projects, sectors or locations…"><select id="category"><option value="">All sectors</option><option>Youth & Skills</option><option>Enterprise & Incubation</option><option>Education</option><option>Agriculture</option><option>Health</option></select></div>
+<div id="projectsGrid" class="grid"></div></div></section>
+
+<section id="partners" class="section pale"><div class="wrap"><div class="head"><div><p class="kicker">FOR SPONSORS & DEVELOPMENT PARTNERS</p><h2>Different resources. One partnership pathway.</h2></div></div><div class="partner-grid">
+<article><b>01</b><h3>Grant funding</h3><p>Fund a defined programme with a budget, timeline, beneficiary group and reporting plan.</p></article>
+<article><b>02</b><h3>CSR sponsorship</h3><p>Sponsor education, skills, agriculture, enterprise, health or community interventions.</p></article>
+<article><b>03</b><h3>In-kind support</h3><p>Provide ICT equipment, vocational tools, agricultural inputs, learning resources or facilities.</p></article>
+<article><b>04</b><h3>Technical partnership</h3><p>Bring expertise in technology, M&E, health, business, agriculture, research or programme delivery.</p></article>
+</div></div></section>
+
+<section id="opportunities" class="section"><div class="wrap"><div class="head"><div><p class="kicker">GRANT-OPPORTUNITY ALERTS</p><h2>Monitor funding opportunities.</h2></div><p>Users can subscribe to opportunities. Administrators can later populate this database with verified calls.</p></div><div id="opps" class="opps"></div></div></section>
+
+<section id="dashboard" class="section pale" hidden><div class="wrap"><div class="head"><div><p class="kicker">SPONSOR DASHBOARD</p><h2>Your partnership workspace.</h2></div><button class="btn" onclick="logout()">Log out</button></div><div id="dash"></div></div></section>
+
+
+<section id="admin" class="section" hidden><div class="wrap">
+<div class="head"><div><p class="kicker">SOF ADMIN CONTROL CENTRE</p><h2>Manage the full partnership lifecycle.</h2></div><p>Admin-only workflow from sponsor KYC and project approval through funding, implementation, M&E and donor reporting.</p></div>
+<div id="adminOverview" class="dashcards"></div>
+<div id="adminPanels"></div>
+</div></section>
+
+<section id="contact" class="section dark"><div class="wrap contact"><div><p class="kicker">READY TO PARTNER?</p><h2>Register your organisation and start a conversation.</h2><p>The portal supports sponsor registration, project applications and opportunity alerts. Before production launch, connect the portal to SOF's verified partnership email and operational review process.</p></div><button class="btn" onclick="openAuth('register')">Create Sponsor Account</button></div></section>
+</main>
+
+<div id="modal" class="modal" hidden><div class="modalbox"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+<script src="app.js"></script>
+</body></html>
