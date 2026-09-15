@@ -1,0 +1,2 @@
+-- Optional: add verified opportunities through the admin workflow/database.
+-- This file intentionally contains no unverified funding calls or invented deadlines.

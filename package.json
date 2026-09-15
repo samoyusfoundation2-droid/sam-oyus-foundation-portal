@@ -1,0 +1,18 @@
+{
+  "name": "sam-oyus-foundation-partnership-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "International partnership and intervention portal for Sam Oyus Foundation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^11.10.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.2",
+    "multer": "^2.0.0"
+  }
+}
