@@ -207,7 +207,7 @@ if (!count) {
 }
 
 const upload = multer({
-  dest: path.join(ROOT, "uploads"),
+ dest: process.env.VERCEL ? "/tmp/uploads" : path.join(ROOT, "uploads"),
   limits: { fileSize: 8 * 1024 * 1024 }
 });
 
