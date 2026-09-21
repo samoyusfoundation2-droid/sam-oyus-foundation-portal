@@ -5,3 +5,5 @@
 @media(max-width:560px){.section{padding:70px 0}.partner-grid,.statsgrid,.dashcards{grid-template-columns:1fr}.filters{display:grid}.actions .btn{width:100%}.contact .btn{width:100%}}
 
 #admin h3,#dashboard h3{color:var(--navy);margin-top:35px}.modalbox h3{color:var(--navy);border-top:1px solid var(--line);padding-top:18px}.tablewrap{margin-bottom:24px}.notice{margin-bottom:15px}
+
+[hidden]{display:none!important;}
