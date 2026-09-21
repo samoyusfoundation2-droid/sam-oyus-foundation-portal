@@ -180,27 +180,27 @@ if (!count) {
     (title, category, location, summary, target_beneficiaries, budget_usd, status, proposal_file)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
   insert.run(
-    "Youth Skills & Work-Readiness Accelerator", "Youth & Skills", "Modakeke, Osun State, Nigeria",
+    "Youth Skills & Work-Readiness Accelerator", "Youth & Skills", "All 36 States & FCT, Nigeria",
     "Vocational and digital skills training linked to tools, mentorship and pathways into work or enterprise.",
     "Young people and vocational trainees", 75000, "seeking_partners", "youth-skills-accelerator.pdf"
   );
   insert.run(
-    "Community Business Incubation Centre", "Enterprise & Incubation", "Modakeke, Osun State, Nigeria",
+    "Community Business Incubation Centre", "Enterprise & Incubation", "All 36 States & FCT, Nigeria",
     "A proposed incubation model where trained people can practice, produce, display, sell and grow their businesses.",
     "Vocational graduates and early-stage entrepreneurs", 150000, "concept_development", "business-incubation-centre.pdf"
   );
   insert.run(
-    "School Learning & ICT Support", "Education", "Modakeke, Osun State, Nigeria",
+    "School Learning & ICT Support", "Education", "All 36 States & FCT, Nigeria",
     "School materials, scholarships and technology/innovation learning opportunities for children and young people.",
     "Primary, secondary and tertiary learners", 50000, "seeking_partners", "education-ict-support.pdf"
   );
   insert.run(
-    "Agriculture & Livelihoods Support", "Agriculture", "Osun State, Nigeria",
+    "Agriculture & Livelihoods Support", "Agriculture", "All 36 States & FCT, Nigeria",
     "Modern agricultural techniques, farmer education and livelihood support designed around economic independence.",
     "Farmers and young people in agriculture", 100000, "concept_development", "agriculture-livelihoods.pdf"
   );
   insert.run(
-    "Community Health & Wellbeing Initiative", "Health", "Osun State, Nigeria",
+    "Community Health & Wellbeing Initiative", "Health", "All 36 States & FCT, Nigeria",
     "A partner-led community wellbeing intervention to be developed with qualified health organisations.",
     "Underserved community members", 60000, "concept_development", "health-wellbeing.pdf"
   );
