@@ -328,7 +328,7 @@ app.get("/api/proposals/:file", (req,res) => {
   res.download(file);
 });
 
-app.get("*", (req,res) => res.sendFile(path.join(ROOT,"public","index.html")));
+app.use((req,res) => res.sendFile(path.join(ROOT,"public","index.html")));
 
 // Vercel serverless entrypoint
 module.exports = app;
