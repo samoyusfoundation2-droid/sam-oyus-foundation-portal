@@ -10,7 +10,7 @@ const crypto = require("crypto");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
-const db = new Database(path.join(ROOT, "data", "portal.db"));
+const db = new Database("/tmp/portal.db");
 
 db.pragma("journal_mode = WAL");
 db.exec(`
