@@ -220,4 +220,4 @@ app.get("/api/proposals/:file", (req,res) => {
 
 app.get("*", (req,res) => res.sendFile(path.join(ROOT,"public","index.html")));
 
-app.listen(PORT, () => console.log(`Sam Oyus Foundation portal running at http://localhost:${PORT}`));
+module.exports = app;
