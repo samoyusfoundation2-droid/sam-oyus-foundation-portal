@@ -10,7 +10,7 @@ const crypto = require("crypto");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
-const db = new Database(process.env.VERCEL ? "/tmp/portal.db" : path.join(ROOT, "data", "portal.db"));
+const db = new Database(path.join(ROOT, "data", "portal.db"));
 
 db.pragma("journal_mode = WAL");
 db.exec(`
@@ -70,109 +70,7 @@ CREATE TABLE IF NOT EXISTS alerts (
   FOREIGN KEY(user_id) REFERENCES users(id),
   FOREIGN KEY(opportunity_id) REFERENCES opportunities(id)
 );
-
-CREATE TABLE IF NOT EXISTS kyc (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER NOT NULL UNIQUE,
-  legal_name TEXT NOT NULL,
-  registration_no TEXT,
-  country TEXT NOT NULL,
-  website TEXT,
-  contact_person TEXT,
-  document_file TEXT,
-  status TEXT NOT NULL DEFAULT 'pending',
-  reviewer_note TEXT,
-  reviewed_at TEXT,
-  FOREIGN KEY(user_id) REFERENCES users(id)
-);
-CREATE TABLE IF NOT EXISTS project_reviews (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  project_id INTEGER NOT NULL,
-  reviewer TEXT NOT NULL,
-  decision TEXT NOT NULL DEFAULT 'pending',
-  score REAL,
-  note TEXT,
-  reviewed_at TEXT,
-  UNIQUE(project_id),
-  FOREIGN KEY(project_id) REFERENCES projects(id)
-);
-CREATE TABLE IF NOT EXISTS matches (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  opportunity_id INTEGER NOT NULL,
-  project_id INTEGER NOT NULL,
-  score REAL NOT NULL,
-  rationale TEXT,
-  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE(opportunity_id, project_id),
-  FOREIGN KEY(opportunity_id) REFERENCES opportunities(id),
-  FOREIGN KEY(project_id) REFERENCES projects(id)
-);
-CREATE TABLE IF NOT EXISTS due_diligence (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  application_id INTEGER NOT NULL UNIQUE,
-  checks TEXT NOT NULL,
-  risk_level TEXT NOT NULL DEFAULT 'medium',
-  status TEXT NOT NULL DEFAULT 'pending',
-  note TEXT,
-  completed_at TEXT,
-  FOREIGN KEY(application_id) REFERENCES applications(id)
-);
-CREATE TABLE IF NOT EXISTS funding (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  application_id INTEGER NOT NULL UNIQUE,
-  approved_amount_usd REAL NOT NULL,
-  currency TEXT NOT NULL DEFAULT 'USD',
-  agreement_file TEXT,
-  status TEXT NOT NULL DEFAULT 'approved',
-  funded_at TEXT,
-  note TEXT,
-  FOREIGN KEY(application_id) REFERENCES applications(id)
-);
-CREATE TABLE IF NOT EXISTS implementation (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  application_id INTEGER NOT NULL UNIQUE,
-  start_date TEXT,
-  end_date TEXT,
-  milestones TEXT,
-  status TEXT NOT NULL DEFAULT 'not_started',
-  note TEXT,
-  FOREIGN KEY(application_id) REFERENCES applications(id)
-);
-CREATE TABLE IF NOT EXISTS monitoring (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  application_id INTEGER NOT NULL,
-  metric TEXT NOT NULL,
-  target TEXT,
-  actual TEXT,
-  reporting_period TEXT,
-  evidence_file TEXT,
-  status TEXT NOT NULL DEFAULT 'reported',
-  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY(application_id) REFERENCES applications(id)
-);
-CREATE TABLE IF NOT EXISTS donor_reports (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  application_id INTEGER NOT NULL,
-  title TEXT NOT NULL,
-  period TEXT,
-  summary TEXT NOT NULL,
-  report_file TEXT,
-  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY(application_id) REFERENCES applications(id)
-);
 `);
-
-
-// Optional first-run admin bootstrap. Set ADMIN_EMAIL and ADMIN_PASSWORD in production.
-if (process.env.ADMIN_EMAIL && process.env.ADMIN_PASSWORD) {
-  const existing = db.prepare("SELECT id FROM users WHERE email=?").get(process.env.ADMIN_EMAIL.toLowerCase());
-  if (!existing) {
-    const hash = require("bcryptjs").hashSync(process.env.ADMIN_PASSWORD, 12);
-    db.prepare(`INSERT INTO users(name,organisation,email,password_hash,country,role)
-      VALUES(?,?,?,?,?,?)`).run("SOF Administrator", "Sam Oyus Foundation",
-      process.env.ADMIN_EMAIL.toLowerCase(), hash, "Nigeria", "admin");
-  }
-}
 
 const count = db.prepare("SELECT COUNT(*) AS n FROM projects").get().n;
 if (!count) {
@@ -180,34 +78,34 @@ if (!count) {
     (title, category, location, summary, target_beneficiaries, budget_usd, status, proposal_file)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`);
   insert.run(
-    "Youth Skills & Work-Readiness Accelerator", "Youth & Skills", "All 36 States & FCT, Nigeria",
+    "Youth Skills & Work-Readiness Accelerator", "Youth & Skills", "Modakeke, Osun State, Nigeria",
     "Vocational and digital skills training linked to tools, mentorship and pathways into work or enterprise.",
     "Young people and vocational trainees", 75000, "seeking_partners", "youth-skills-accelerator.pdf"
   );
   insert.run(
-    "Community Business Incubation Centre", "Enterprise & Incubation", "All 36 States & FCT, Nigeria",
+    "Community Business Incubation Centre", "Enterprise & Incubation", "Modakeke, Osun State, Nigeria",
     "A proposed incubation model where trained people can practice, produce, display, sell and grow their businesses.",
     "Vocational graduates and early-stage entrepreneurs", 150000, "concept_development", "business-incubation-centre.pdf"
   );
   insert.run(
-    "School Learning & ICT Support", "Education", "All 36 States & FCT, Nigeria",
+    "School Learning & ICT Support", "Education", "Modakeke, Osun State, Nigeria",
     "School materials, scholarships and technology/innovation learning opportunities for children and young people.",
     "Primary, secondary and tertiary learners", 50000, "seeking_partners", "education-ict-support.pdf"
   );
   insert.run(
-    "Agriculture & Livelihoods Support", "Agriculture", "All 36 States & FCT, Nigeria",
+    "Agriculture & Livelihoods Support", "Agriculture", "Osun State, Nigeria",
     "Modern agricultural techniques, farmer education and livelihood support designed around economic independence.",
     "Farmers and young people in agriculture", 100000, "concept_development", "agriculture-livelihoods.pdf"
   );
   insert.run(
-    "Community Health & Wellbeing Initiative", "Health", "All 36 States & FCT, Nigeria",
+    "Community Health & Wellbeing Initiative", "Health", "Osun State, Nigeria",
     "A partner-led community wellbeing intervention to be developed with qualified health organisations.",
     "Underserved community members", 60000, "concept_development", "health-wellbeing.pdf"
   );
 }
 
 const upload = multer({
- ddest: process.env.VERCEL ? "/tmp/uploads" : path.join(ROOT, "uploads"),
+  dest: path.join(ROOT, "uploads"),
   limits: { fileSize: 8 * 1024 * 1024 }
 });
 
@@ -220,14 +118,6 @@ app.use(session({
   cookie: { httpOnly: true, sameSite: "lax", secure: false, maxAge: 1000*60*60*8 }
 }));
 app.use(express.static(path.join(ROOT, "public")));
-
-
-function requireAdmin(req,res,next) {
-  if (!req.session.userId) return res.status(401).json({error:"Authentication required"});
-  const u = user(req);
-  if (!u || u.role !== "admin") return res.status(403).json({error:"SOF administrator access required"});
-  next();
-}
 
 function requireAuth(req, res, next) {
   if (!req.session.userId) return res.status(401).json({error:"Authentication required"});
@@ -328,9 +218,6 @@ app.get("/api/proposals/:file", (req,res) => {
   res.download(file);
 });
 
-app.use((req,res) => res.sendFile(path.join(ROOT,"public","index.html")));
-
-// Vercel serverless entrypoint
-module.exports = app;
+app.get("*", (req,res) => res.sendFile(path.join(ROOT,"public","index.html")));
 
 app.listen(PORT, () => console.log(`Sam Oyus Foundation portal running at http://localhost:${PORT}`));
