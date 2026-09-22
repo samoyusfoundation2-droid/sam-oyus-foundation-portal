@@ -105,7 +105,7 @@ if (!count) {
 }
 
 const upload = multer({
-  dest: path.join(ROOT, "uploads"),
+  dest: "/tmp/uploads",
   limits: { fileSize: 8 * 1024 * 1024 }
 });
 
