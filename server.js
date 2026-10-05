@@ -198,7 +198,7 @@ app.post("/api/opportunities/:id/subscribe", requireAuth, (req,res) => {
   } catch(e) { res.json({ok:true,already:true}); }
 });
 
-app.get("/api/my/alerts", requireAuth, (req,res) => {
+
   res.json(db.prepare(`SELECT o.*,a.read FROM alerts a JOIN opportunities o ON o.id=a.opportunity_id
     WHERE a.user_id=? ORDER BY a.id DESC`).all(req.session.userId));
 });
@@ -218,6 +218,8 @@ app.get("/api/proposals/:file", (req,res) => {
   res.download(file);
 });
 
-app.get("*", (req,res) => res.sendFile(path.join(ROOT,"public","index.html")));
+app.use((req, res) => {
+  res.sendFile(path.join(ROOT, "public", "index.html"));
+});
 
 module.exports = app;
