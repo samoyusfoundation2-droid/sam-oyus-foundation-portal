@@ -198,10 +198,11 @@ app.post("/api/opportunities/:id/subscribe", requireAuth, (req,res) => {
   } catch(e) { res.json({ok:true,already:true}); }
 });
 
-
+app.get("/api/alerts", requireAuth, (req,res) => {
   res.json(db.prepare(`SELECT o.*,a.read FROM alerts a JOIN opportunities o ON o.id=a.opportunity_id
     WHERE a.user_id=? ORDER BY a.id DESC`).all(req.session.userId));
 });
+  
 
 app.get("/api/dashboard", requireAuth, (req,res) => {
   const applications = db.prepare(`SELECT a.*,p.title,p.category FROM applications a JOIN projects p ON p.id=a.project_id
